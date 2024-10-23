@@ -2,6 +2,7 @@
 
 **2024 WBNA Player Stats Analysis
 **
+
 The source of the data is from https://www.basketball-reference.com/wnba/years/2024_totals.html#header
 
 In R Studio, I created a graph of the distribution of the three-point shooting percentage made by each players. Then reported and interpreted the appropriate statistics like mean and median.
