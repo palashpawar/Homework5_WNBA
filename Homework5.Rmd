@@ -1,0 +1,83 @@
+---
+title: "Homework 5"
+output: html_document
+date: "2024-10-23"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, message=FALSE}
+library(readr)
+
+wnba <- read_csv("wnba1.csv")
+```
+
+# Question 1
+
+```{r}
+nrow(wnba)
+```
+
+There are a total of 183 WNBA players in the roster for 2024.
+
+# Question 2
+
+```{r, echo=FALSE, message=FALSE}
+library(ggplot2)
+library(dplyr)
+
+wnba_clean <- wnba |>
+  filter(is.finite(three_point_persentage))
+
+ggplot(wnba_clean, aes(x = three_point_persentage)) +
+  geom_histogram(binwidth = 0.02, fill = "blue", color = "black", alpha = 0.7) +
+  labs(title = "Distribution of Three-Point Shooting Percentage", 
+       x = "3-Point Shooting Percentage", 
+       y = "Frequency") +
+  theme_minimal()
+
+
+
+summary_stats <- wnba_clean |>
+  summarise(
+    Mean = mean(three_point_persentage, na.rm = TRUE),
+    Median = median(three_point_persentage, na.rm = TRUE),
+    Std_Dev = sd(three_point_persentage, na.rm = TRUE),
+    IQR = IQR(three_point_persentage, na.rm = TRUE),
+    Min = min(three_point_persentage, na.rm = TRUE),
+    Max = max(three_point_persentage, na.rm = TRUE)
+  )
+
+library(knitr)
+
+kable(summary_stats, caption = "Summary Statistics for Three-Point Shooting Percentage")
+
+
+```
+
+# Question 3 
+
+```{r}
+
+wnba_clean <- wnba %>%
+  filter(is.finite(Minutes_played), is.finite(three_point_persentage))
+
+# Choose the player to highlight
+highlight_player <- "Ariel Atkins"
+
+# Create the scatter plot
+ggplot(wnba_clean, aes(x = Minutes_played, y = three_point_persentage)) +
+  geom_point(color = "blue", alpha = 0.6) +                    # Scatter points
+  geom_point(data = wnba_clean[wnba_clean$Player == highlight_player, ], 
+             aes(x = Minutes_played, y = three_point_persentage), color = "red", size = 4) +  # Highlight player
+  geom_text(data = wnba_clean[wnba_clean$Player == highlight_player, ], 
+            aes(label = Player), vjust = -1, color = "red", size = 4) + # Add label
+  labs(title = "Minutes Played vs Three-Point Shooting Percentage",
+       x = "Minutes Played", 
+       y = "Three-Point Shooting Percentage") +
+  theme_minimal()
+
+
+```
