@@ -1,5 +1,5 @@
 ---
-title: "Homework 5"
+title: "Homework 5 - 2024 WNBA Player Stats"
 output: html_document
 date: "2024-10-23"
 ---
@@ -8,7 +8,7 @@ date: "2024-10-23"
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-```{r, message=FALSE}
+```{r, message=FALSE, echo=FALSE}
 library(readr)
 
 wnba <- read_csv("wnba1.csv")
@@ -57,11 +57,13 @@ kable(summary_stats, caption = "Summary Statistics for Three-Point Shooting Perc
 
 ```
 
-# Question 3 
+Above is a table with descriptive statistics regarding the Three-point Shooting Percentage. The mean percentage is around 30%, which means that the average player made 1 out of every 3 shots from the three-point line.
 
-```{r}
+# Question 3
 
-wnba_clean <- wnba %>%
+```{r, echo=FALSE}
+
+wnba_clean <- wnba |>
   filter(is.finite(Minutes_played), is.finite(three_point_persentage))
 
 # Choose the player to highlight
